@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\dangdang\dist\team1.jar</jar>
+  <outfile>C:\dangdang\dist\RhythmDangDang.exe</outfile>
+  <errTitle>JRE 5 버젼 이상의 설치가 필요해요 </errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>true</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>C:\dangdang\dist\images12.ico</icon>
+  <classPath>
+    <mainClass>dangdang.Main</mainClass>
+  </classPath>
+  <jre>
+    <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
+    <minVersion>1.5.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+  <versionInfo>
+    <fileVersion>1.0.0.0</fileVersion>
+    <txtFileVersion>Ver 1.0</txtFileVersion>
+    <fileDescription>dangdang</fileDescription>
+    <copyright>jinun,jisu,hyeonki,dain,yumi</copyright>
+    <productVersion>1.0.0.0</productVersion>
+    <txtProductVersion>Ver 1.0</txtProductVersion>
+    <productName>RhythmDangDang</productName>
+    <companyName></companyName>
+    <internalName>RhythmDangDang</internalName>
+    <originalFilename>RhythmDangDang.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>KOREAN</language>
+  </versionInfo>
+  <messages>
+    <startupErr>An error occurred while starting the application.</startupErr>
+    <bundledJreErr>JRE 5 이상을 설치해주세요</bundledJreErr>
+    <jreVersionErr>JRE 5 이상을 설치해주세요</jreVersionErr>
+    <launcherErr>The registry refers to a nonexistent Java Runtime Environment installation or the runtime is corrupted.</launcherErr>
+    <instanceAlreadyExistsMsg>이미 실행중입니다</instanceAlreadyExistsMsg>
+  </messages>
+</launch4jConfig>
