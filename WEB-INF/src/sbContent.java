@@ -4,23 +4,25 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.*;
 import java.io.*;
 import java.sql.*;
+import jin.db.ConnectionPoolBean;
 
 public class sbContent extends HttpServlet {
    Connection con;
    Statement stmt;
    int seq = -1;
-   public void init(){ //DB연결 
-      String url = "jdbc:oracle:thin:@127.0.0.1:1521:JAVA";
-      String usr = "servlet";
-      String pwd = "java";
-      try{
-         Class.forName("oracle.jdbc.driver.OracleDriver");
-         con = DriverManager.getConnection(url, usr, pwd);
-         stmt = con.createStatement();
-      }catch(ClassNotFoundException cnfe){
-         System.out.println("#Oracle driver loading failed");
-      }catch(SQLException se){}
-   }
+   private ConnectionPoolBean getPool() throws SQLException {
+		ServletContext application = this.getServletContext();
+		ConnectionPoolBean pool = (ConnectionPoolBean)application.getAttribute("pool");
+		if(pool == null){
+			try{
+				pool = new ConnectionPoolBean();
+				application.setAttribute("pool", pool);
+			}catch(ClassNotFoundException cnfe){
+				System.out.println("드라이버로딩 실패");
+			}
+		}
+		return pool;
+	}
    public void service(HttpServletRequest req, HttpServletResponse res)
       throws ServletException, IOException {
       res.setContentType("text/html;charset=utf-8"); 
@@ -46,8 +48,14 @@ public class sbContent extends HttpServlet {
 		    String subject="";
 		    String content ="";
             String sql = "select * from BOARD where SEQ="+seq+" order by seq desc";
+			ConnectionPoolBean pool = null;
+				Connection con = null;
+				Statement stmt = null;
             try{
-               rs = stmt.executeQuery(sql);
+				pool = getPool();
+				con = pool.getConnection();
+				stmt = con.createStatement();
+                rs = stmt.executeQuery(sql);
                while(rs.next()){
                   seq = rs.getInt(1);
                   name = rs.getString(2);
@@ -71,7 +79,7 @@ public class sbContent extends HttpServlet {
 			pw.println("<hr width='600' size='2' noshade>");
 			pw.println("<h2>Simple Board with Servlet by Jinun</h2>");
 			pw.println("&nbsp;&nbsp;&nbsp;");
-			pw.println("<a href='board/input.html'>글쓰기 </a>");
+			pw.println("<a href='board/input.html'>글쓰기pool </a>");
 			pw.println("<hr width='600' size='2' noshade>");
 			pw.println("<table border='1' width='600' align='center' cellpadding='3'>");
 			pw.println("<tr>");
@@ -107,9 +115,9 @@ public class sbContent extends HttpServlet {
 			pw.println("<b>");
 			pw.println("<a href='update.do?seq="+seq+"'>수정</a>");
 			pw.println(" | ");
-			pw.println("<a href='del.do?seq="+seq+"'>삭제</a>");
+			pw.println("<a href='del_pool.do?seq="+seq+"'>삭제</a>");
 			pw.println(" | ");
-			pw.println("<a href='list.do'>목록!</a>"); 
+			pw.println("<a href='list_pool.do'>목록!</a>");  
 			pw.println("</b>");
 		 pw.println("</center>");
    }	

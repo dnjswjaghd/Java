@@ -55,7 +55,7 @@
         <servlet-name>AddrServletListName</servlet-name>
         <url-pattern>/list.do</url-pattern>
     </servlet-mapping>
-
+ 
 	<servlet>
         <servlet-name>AddrServletInName</servlet-name>
         <servlet-class>jin.sv.addr.AddrServletIn</servlet-class>
@@ -67,6 +67,17 @@
     </servlet-mapping>
 
 	<servlet>
+        <servlet-name>AddrServletInPoolName</servlet-name>
+        <servlet-class>jin.sv.addr.AddrServletInPool</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AddrServletInPoolName</servlet-name>
+        <url-pattern>/board/insert_pool.do</url-pattern>  
+    </servlet-mapping> 
+
+
+	<servlet>
         <servlet-name>AddrServletDelName</servlet-name>
         <servlet-class>jin.sv.addr.AddrServletDel</servlet-class>
     </servlet>
@@ -75,6 +86,17 @@
         <servlet-name>AddrServletDelName</servlet-name>
         <url-pattern>/del.do</url-pattern>
     </servlet-mapping>
+ 
+	<servlet>
+        <servlet-name>AddrServletDelPoolName</servlet-name>
+        <servlet-class>jin.sv.addr.AddrServletDelPool</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AddrServletDelPoolName</servlet-name>
+        <url-pattern>/del_pool.do</url-pattern> 
+    </servlet-mapping> 
+
 
 	<servlet>
         <servlet-name>sbContentName</servlet-name>
@@ -107,7 +129,15 @@
     </servlet-mapping>
 
 
+	<servlet>
+        <servlet-name>AddrServletListPoolName</servlet-name>
+        <servlet-class>jin.sv.addr.pool.AddrServletListPool</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>AddrServletListPoolName</servlet-name>  
+        <url-pattern>/list_pool.do</url-pattern> 
+    </servlet-mapping>  
 
 
 

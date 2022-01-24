@@ -4,6 +4,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.*;
 import java.io.*;
 import java.sql.*;
+import jin.db.ConnectionPoolBean;
 
 //update ACC set BALANCE=((select BALANCE from ACC where EMAIL='one@daum.net')-10000) where EMAIL='one@daum.net'
 
@@ -12,19 +13,19 @@ public class sbUpdate extends HttpServlet {
    Statement stmt;
    PreparedStatement pstmt;
    String sql;
-   public void init(){ //DB연결 
-      String url = "jdbc:oracle:thin:@127.0.0.1:1521:JAVA";
-      String usr = "servlet";
-      String pwd = "java";
-      try{
-         Class.forName("oracle.jdbc.driver.OracleDriver");
-         con = DriverManager.getConnection(url, usr, pwd);
-		 stmt = con.createStatement();
-         pstmt = con.prepareStatement(sql);
-      }catch(ClassNotFoundException cnfe){
-         System.out.println("#Oracle driver loading failed");
-      }catch(SQLException se){}
-   }
+   private ConnectionPoolBean getPool() throws SQLException {
+		ServletContext application = this.getServletContext();
+		ConnectionPoolBean pool = (ConnectionPoolBean)application.getAttribute("pool");
+		if(pool == null){
+			try{
+				pool = new ConnectionPoolBean();
+				application.setAttribute("pool", pool);
+			}catch(ClassNotFoundException cnfe){
+				System.out.println("드라이버로딩 실패");
+			}
+		}
+		return pool;
+	}
    public void service(HttpServletRequest req, HttpServletResponse res) //Get방식으로 받는거라 doGet해줘야함
       throws ServletException, IOException { //SQL문수행 -> list.html 
       res.setContentType("text/html;charset=utf-8"); 
@@ -46,10 +47,16 @@ public class sbUpdate extends HttpServlet {
 		}
 	  } 
 	  ResultSet rs = null;
+	   ConnectionPoolBean pool = null;
+				Connection con = null;
+				Statement stmt = null;
 	  sql = "select * from BOARD where SEQ="+seq+" order by seq desc";
 	  try{
+		pool = getPool();
+		con = pool.getConnection();
+		stmt = con.createStatement();
 		rs = stmt.executeQuery(sql);
-		while(rs.next()){
+		while(rs.next()){ 
 		  name = rs.getString(2);
 		  email = rs.getString(3);
 		  subject = rs.getString(4);
@@ -71,7 +78,7 @@ public class sbUpdate extends HttpServlet {
 		pw.println("<center>");
 		pw.println("<hr width='600' size='2' noshade>");
 		pw.println("<h2>Simple Board with Servlet</h2>");
-		pw.println("<a href='list.do'>글목록</a>");
+		pw.println("<a href='list.do'>글목록pool</a>"); 
 		pw.println("<hr width='600' size='2' noshade>");
 		pw.println("</center>");
 		pw.println("<form name='f' method='post' action='upGet.do'>");
