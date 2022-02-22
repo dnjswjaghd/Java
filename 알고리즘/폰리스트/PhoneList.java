@@ -2,9 +2,9 @@ package algo3;
 
 import java.util.Arrays;
 
-public class PhoneList {//2´Ü°è
+public class PhoneList {//2Â´ÃœÂ°Ã¨
 		public String[] phone_book= {"123", "456", "789", "1234"};
-	   /* public boolean solution(String[] phone_book) {
+	   /* public boolean solution(String[] phone_book) { 
 	        boolean answer = true;
 	        Arrays.sort(phone_book);
 	        String k="";
@@ -13,7 +13,7 @@ public class PhoneList {//2´Ü°è
 	        	if(answer==false) {
 	        		break;
 	        	}
-	        	int choosedIndex = Arrays.binarySearch(phone_book, pb); //index°¡ À½¼ö°æ¿ì»ý°¢
+	        	int choosedIndex = Arrays.binarySearch(phone_book, pb); //indexÂ°Â¡ Ã€Â½Â¼Ã¶Â°Ã¦Â¿Ã¬Â»Ã½Â°Â¢
 	        	for(String pb2 : phone_book) {
 	        		if(Arrays.binarySearch(phone_book, pb)>=0) {
 		        		if(pb2.startsWith(pb) && Arrays.binarySearch(phone_book, pb2)!=choosedIndex ) {
